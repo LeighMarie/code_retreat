@@ -23,6 +23,17 @@ class Game:
 		if index > self.size or index < 0:
 			raise ValueError('Bad index')
 
+	def neighbors(self, x, y):
+		offsets = [-1, 0, 1]
+		for x_off in offsets:
+			for y_off in offsets:
+				if x_off == 0 and y_off == 0 or (x+x_off >= self.size) or (y+y_off >= self.size):
+					continue
+				if x + x_off < 0 or y + y_off < 0:
+					continue
+				yield (x + x_off, y+ y_off)
+
+
 class ConwayTest(unittest.TestCase):
 	def testGetSet(self):
 		c = Game(5)
@@ -40,7 +51,16 @@ class ConwayTest(unittest.TestCase):
 		with self.assertRaises(ValueError):
 			c.set(-1, 0)
 
-                
+	def testNeighbors(self):
+		c = Game(10)
+		self.assertTrue((0,0) in c.neighbors(1, 1))
+		self.assertTrue((2,2) in c.neighbors(1, 1))
+		self.assertEquals(8, len([1 for x in c.neighbors(1, 1)]))
+
+	def testNeighborsOutOfBounds(self):
+		c = Game(5)
+		self.assertFalse((-1, -1) in c.neighbors(0, 0))
+		self.assertFalse((5, 5) in c.neighbors(4, 4))
         
 
 if __name__ == '__main__':
