@@ -33,6 +33,10 @@ class Game:
 					continue
 				yield (x + x_off, y+ y_off)
 
+	def countNeighbors(self,x,y):
+		neighbors = self.neighbors(x,y)
+		return sum([int(self.get(x, y)) for x, y in neighbors])
+
 
 class ConwayTest(unittest.TestCase):
 	def testGetSet(self):
@@ -61,6 +65,14 @@ class ConwayTest(unittest.TestCase):
 		c = Game(5)
 		self.assertFalse((-1, -1) in c.neighbors(0, 0))
 		self.assertFalse((5, 5) in c.neighbors(4, 4))
+
+	def testCountNeighbors(self):
+		c = Game(5) 
+		c.set(0, 0)
+		c.set(1, 0)
+		self.assertEquals(2, c.countNeighbors(1,1))
+		self.assertEquals(2, c.countNeighbors(0,1))
+		self.assertEquals(0, c.countNeighbors(3, 3))
         
 
 if __name__ == '__main__':
