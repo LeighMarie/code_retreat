@@ -7,6 +7,12 @@ class Game:
 
 	def set(self, x, y):
 		self.grid[(x, y)] = True
+
+	def get(self,x,y):
+		if (x,y) in self.grid:
+			return self.grid[(x,y)]
+		else:
+			return False
                 
 
 class ConwayTest(unittest.TestCase):
@@ -14,6 +20,10 @@ class ConwayTest(unittest.TestCase):
 		c = Game()
 		c.set(1, 1)
 		self.assertTrue(c.grid[(1, 1)])
+	def testGet(self):
+		c = Game()
+		c.set(2,2)
+		self.assertTrue(c.get(2,2))
                 
         
 
