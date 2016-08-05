@@ -37,6 +37,18 @@ class Game:
 		neighbors = self.neighbors(x,y)
 		return sum([int(self.get(x, y)) for x, y in neighbors])
 
+	def nextState(self,x,y):
+		c = self.countNeighbors(x,y)
+		cur_state = self.get(x,y)
+		return (cur_state and c == 2) or (c == 3)
+
+	def tick(self):
+		# new dict
+		# for x in range(size), y in range(size)
+		# if next state (x, y) new dict[x, y] = true
+		# grid = new dict
+
+
 
 class ConwayTest(unittest.TestCase):
 	def testGetSet(self):
@@ -73,6 +85,18 @@ class ConwayTest(unittest.TestCase):
 		self.assertEquals(2, c.countNeighbors(1,1))
 		self.assertEquals(2, c.countNeighbors(0,1))
 		self.assertEquals(0, c.countNeighbors(3, 3))
+
+	def testNextState(self):
+		c = Game(5)
+		self.assertEquals(0, c.nextState(0,0))
+		c.set(0,0)
+		c.set(1, 0)
+		c.set(2, 0)
+		self.assertEquals(False, c.nextState(0, 0))
+		self.assertEquals(True, c.nextState(1, 0))
+		self.assertEquals(True, c.nextState(1, 1))
+		self.assertEquals(False, c.nextState(2, 0))
+
         
 
 if __name__ == '__main__':
