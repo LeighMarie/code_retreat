@@ -20,7 +20,7 @@ class Game:
 			return False
     
 	def check(self, index):
-		if index > self.size:
+		if index > self.size or index < 0:
 			raise ValueError('Bad index')
 
 class ConwayTest(unittest.TestCase):
@@ -37,6 +37,8 @@ class ConwayTest(unittest.TestCase):
 		c = Game(5)
 		with self.assertRaises(ValueError):
 			c.set(6,6)
+		with self.assertRaises(ValueError):
+			c.set(-1, 0)
 
                 
         
